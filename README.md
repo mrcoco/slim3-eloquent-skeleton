@@ -32,6 +32,8 @@ This is a simple skeleton project fork from akrabat/slim3-skeleton that includes
 * `app/src/Action/HomeAction.php`: Action class for the home page
 * `app/templates/home.twig`: Twig template file for the home page
 
+## Migration
+
 * Confirmation of status
 * phpmig status
 
