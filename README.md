@@ -31,3 +31,24 @@ This is a simple skeleton project fork from akrabat/slim3-skeleton that includes
 * `app/routes.php`: All application routes are here
 * `app/src/Action/HomeAction.php`: Action class for the home page
 * `app/templates/home.twig`: Twig template file for the home page
+
+* Confirmation of status
+* phpmig status
+
+* Creating // migration file
+* phpmig generate [MigrationName]
+
+* //Execution of migration
+* phpmig migration
+
+* // I one Back
+* phpmig rollback
+
+* // Return all
+* phpmig rollback -t 0
+
+* // Go back to the time of completion of the specified MigrationID
+* phpmig rollback -t [MigrationID]
+
+* // Only specified MigrationID the migration / roll back
+* phpmig [up | down] [MigrationID]
