@@ -1,4 +1,3 @@
 <?php
-// Application middleware
-
-// e.g: $app->add(new \Slim\Csrf\Guard);
+use Zeuxisoo\Whoops\Provider\Slim\WhoopsMiddleware;
+$app->add(new WhoopsMiddleware);

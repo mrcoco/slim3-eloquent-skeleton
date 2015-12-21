@@ -1,6 +1,8 @@
 <?php
 return [
     'settings' => [
+        'debug'         => true,
+        'whoops.editor' => 'sublime',
         // View settings
         'view' => [
             'template_path' => __DIR__ . '/templates',
