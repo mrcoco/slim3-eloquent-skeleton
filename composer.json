@@ -1,0 +1,26 @@
+{
+    "name": "mrcoco/slim3-eloquent-skeleton",
+    "description": "Simple Slim Framework 3 skeleton with Twig,eloquent & Monolog.",
+    "license": "BSD-3-Clause",
+    "type": "project",
+    "keywords": ["slim-framework", "skeleton","eloquent"],
+    "authors": [
+        {
+            "name": "Dwi Agus",
+            "email": "dwiagus@cempakaweb.com",
+            "homepage": "http://cempakaweb.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/src"
+        }
+    },
+    "require": {
+        "slim/slim": "^3.0",
+        "slim/twig-view": "^1.1",
+        "slim/flash": "^0.1.0",
+        "monolog/monolog": "^1.13",
+        "illuminate/database": "^5.1"
+    }
+}
