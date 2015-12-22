@@ -30,6 +30,6 @@
     "scripts": {
         "post-install-cmd": [
             "phpmig"
-        ],
-    },
+        ]
+    }
 }

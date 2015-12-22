@@ -10,7 +10,13 @@ class Group extends Migration
      */
     public function up()
     {
-
+        Capsule::schema()->create('groups', function($table)
+        {
+            $table->increments('id');
+            $table->string('group_name');
+            $table->string('description');
+            $table->timestamps();
+        });
     }
 
     /**

@@ -8,6 +8,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use App\Model\User;
 use App\Validation\Validator;
 use App\Helper\Hash;
+use App\Helper\Acl;
 final class HomeAction
 {
     private $view;
@@ -41,8 +42,9 @@ final class HomeAction
     public function dashboard(Request $request, Response $response, $args)
     {
         if(isset($_SESSION['user_id'])){
-            print_r($_SESSION);
-            print_r($this->session->get('user_id'));
+            $acl = new Acl;
+            print_r($acl->profile());
+            //return $this->view->render($response, 'dashboard.twig');
         }else{
             return $response->withRedirect('login');
         }
@@ -74,6 +76,7 @@ final class HomeAction
             $user = User::where('username', $identifier)->orWhere('email', $identifier)->first();
             if($user && $this->hash->passwordCheck($password, $user->password)){                
                 $this->session->set($this->auth['session'],$user->id);
+                $this->session->set($this->auth['group'],$user->group_id);
                 return $response->withRedirect('dashboard');
             }
             else{
@@ -113,6 +116,7 @@ final class HomeAction
             $user->email    = $email;
             $user->username = $username;
             $user->password = $this->hash->password($password);
+            $user->group_id = 1;
             $user->save();
             $success = "You have been registered.";
         }

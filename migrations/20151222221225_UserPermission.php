@@ -3,21 +3,19 @@
 use Phpmig\Migration\Migration;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-class User extends Migration
+class UserPermission extends Migration
 {
     /**
      * Do the migration
      */
     public function up()
     {
-        Capsule::schema()->create('users', function($table)
+        Capsule::schema()->create('users_permission', function($table)
         {
             $table->increments('id');
-            $table->string('username');
-            $table->string('email')->unique()->nullable();
-            $table->string('password');
             $table->integer('group_id');
-            $table->integer('status');
+            $table->string('page');
+            $table->string('action');
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ class User extends Migration
      */
     public function down()
     {
-        Capsule::schema()->drop('users');
+        Capsule::schema()->drop('users_permission');
     }
 }

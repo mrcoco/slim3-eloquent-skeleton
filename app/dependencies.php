@@ -59,3 +59,6 @@ $container['App\Action\HomeAction'] = function ($c) use ($app) {
     $settings = $c->get('settings');
     return new App\Action\HomeAction($c->get('view'), $c->get('logger'),$c->get('hash'),$c->get('auth'));
 };
+$container['App\Action\Admin'] = function ($c) {
+    return new App\Action\Admin($c->get('view'), $c->get('logger'));
+};
