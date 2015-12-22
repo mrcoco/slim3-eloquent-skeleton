@@ -8,14 +8,13 @@ use Psr\Http\Message\ResponseInterface as Response;
 use App\Model\User;
 use App\Validation\Validator;
 use App\Helper\Hash;
-use \Slim\Flash\Messages;
 final class HomeAction
 {
     private $view;
     private $logger;
     private $hash;
     private $auth;
-    private $flash;
+    //private $flash;
     private $session;
 
     public function __construct(Twig $view, LoggerInterface $logger, $hash,$auth)
@@ -24,7 +23,6 @@ final class HomeAction
         $this->logger   = $logger;
         $this->hash     = $hash;
         $this->auth     = $auth;
-        $this->flash    = new \Slim\Flash\Messages();
         $this->session  = new \App\Helper\Session;
        
     }
@@ -43,7 +41,7 @@ final class HomeAction
     public function dashboard(Request $request, Response $response, $args)
     {
         if(isset($_SESSION['user_id'])){
-            print_r($_SESSION['user_id']);
+            print_r($_SESSION);
             print_r($this->session->get('user_id'));
         }else{
             return $response->withRedirect('login');
@@ -79,8 +77,8 @@ final class HomeAction
                 return $response->withRedirect('dashboard');
             }
             else{
-                $this->flash->addMessage('global', 'Sorry, you couldn\'t be logged in.');            
-                $this->view->render($response, 'login.twig',['errors' => $v->errors(),'request' => $request]);
+                $flash = 'Sorry, you couldn\'t be logged in.';            
+                $this->view->render($response, 'login.twig',['errors' => $v->errors(),'flash' => $flash,'request' => $request]);
             }
 
         }else{        
