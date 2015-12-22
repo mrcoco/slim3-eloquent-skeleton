@@ -46,10 +46,16 @@ $container['logger'] = function ($c) {
     return $logger;
 };
 
+$container['hash'] = function($c) {
+    return new App\Helper\Hash($c->get('app'));
+};
+
+
 // -----------------------------------------------------------------------------
 // Action factories
 // -----------------------------------------------------------------------------
 
 $container['App\Action\HomeAction'] = function ($c) {
-    return new App\Action\HomeAction($c->get('view'), $c->get('logger'));
+    $settings = $c->get('settings');
+    return new App\Action\HomeAction($c->get('view'), $c->get('logger'),$c->get('hash'));
 };
