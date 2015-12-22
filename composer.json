@@ -26,5 +26,10 @@
         "davedevelopment/phpmig": "^1.2",
         "zeuxisoo/slim-whoops": "^0.4.0",
         "alexgarrett/violin": "^2.2"
-    }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "phpmig"
+        ],
+    },
 }

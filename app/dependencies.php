@@ -55,7 +55,7 @@ $container['hash'] = function($c) {
 // Action factories
 // -----------------------------------------------------------------------------
 
-$container['App\Action\HomeAction'] = function ($c) {
+$container['App\Action\HomeAction'] = function ($c) use ($app) {
     $settings = $c->get('settings');
-    return new App\Action\HomeAction($c->get('view'), $c->get('logger'),$c->get('hash'));
+    return new App\Action\HomeAction($c->get('view'), $c->get('logger'),$c->get('hash'),$c->get('auth'));
 };

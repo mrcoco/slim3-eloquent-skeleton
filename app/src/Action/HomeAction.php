@@ -8,17 +8,24 @@ use Psr\Http\Message\ResponseInterface as Response;
 use App\Model\User;
 use App\Validation\Validator;
 use App\Helper\Hash;
-
+use \Slim\Flash\Messages;
 final class HomeAction
 {
     private $view;
     private $logger;
+    private $hash;
+    private $auth;
+    private $flash;
+    private $app;
 
-    public function __construct(Twig $view, LoggerInterface $logger, $hash)
+    public function __construct(Twig $view, LoggerInterface $logger, $hash,$auth)
     {
         $this->view     = $view;
         $this->logger   = $logger;
         $this->hash     = $hash;
+        $this->auth     = $auth;
+        $this->flash    = new \Slim\Flash\Messages();
+       
     }
 
     public function dispatch(Request $request, Response $response, $args)
@@ -32,6 +39,22 @@ final class HomeAction
         return $response;
     }
 
+    public function dashboard(Request $request, Response $response, $args)
+    {
+        if(isset($_SESSION['user_id'])){
+
+        }else{
+            return $response->withRedirect('login');
+        }
+    }
+
+    public function logout(Request $request, Response $response, $args)
+    {
+        $session    = new \App\Helper\Session;
+        $session::destroy();
+        return $response->withRedirect('login');
+    }
+
     public function login(Request $request, Response $response, $args){
         $this->view->render($response, 'login.twig');
         return $response;
@@ -39,15 +62,28 @@ final class HomeAction
 
     public function loginPost(Request $request, Response $response, $args)
     {
-        $identifier = $request->getAttribute('identifier');
-        $password   = $request->getAttribute('password');
+        $identifier = $_POST['identifier'];
+        $password   = $_POST['password'];
         $v = new Validator(new User);
         $v->validate([
-        'identifier'    => [$identifier, 'required'],
+        'identifier'    => [$identifier, 'required|email'],
         'password'      => [$password, 'required']
         ]);;
 
+        if($v->passes()){
+            $user = User::where('username', $identifier)->orWhere('email', $identifier)->first();
+            if($user && $this->hash->passwordCheck($password, $user->password)){
+                $_SESSION[$this->auth['session']] = $user->id;
+                return $response->withRedirect('dashboard');
+            }
+            else{
+                $this->flash->addMessage('global', 'Sorry, you couldn\'t be logged in.');            
+                $this->view->render($response, 'login.twig',['errors' => $v->errors(),'request' => $request]);
+            }
 
+        }else{        
+            $this->view->render($response, 'login.twig',['errors' => $v->errors(),'request' => $request]);
+        }
         
         return $response;
     }
@@ -74,7 +110,7 @@ final class HomeAction
 
         if ($v->passes()) {
             $user = new User();
-            $user->email = $email;
+            $user->email    = $email;
             $user->username = $username;
             $user->password = $this->hash->password($password);
             $user->save();

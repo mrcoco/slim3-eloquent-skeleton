@@ -1,5 +1,17 @@
 <?php
 return [
+    'app' => [
+            'url' => 'http://slim.dev',
+            'hash' => [
+                'algo' => PASSWORD_BCRYPT,
+                'cost' => 10
+            ]
+    ],
+    'auth' => [
+        'session'   => 'user_id',
+        'group'     => 'group_id',
+        'remember'  => 'user_r'
+    ],
     'settings' => [
         'debug'         => true,
         'whoops.editor' => 'sublime',
@@ -26,7 +38,7 @@ return [
         'database' => [
             'driver'    => 'mysql',
             'host'      => 'localhost',
-            'database'  => 'slim',
+            'database'  => 'slim_project',
             'username'  => 'root',
             'password'  => '',
             'charset'   => 'utf8',
