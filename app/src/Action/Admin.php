@@ -18,7 +18,7 @@ class Admin
 	{
 		$this->view     = $view;
         $this->logger   = $logger;
-		$this->session = new \App\Helper\Session;
+		$this->session 	= new \App\Helper\Session;
 		$this->response = new Response;
 	}
 
