@@ -16,7 +16,7 @@ final class HomeAction
     private $hash;
     private $auth;
     private $flash;
-    private $app;
+    private $session;
 
     public function __construct(Twig $view, LoggerInterface $logger, $hash,$auth)
     {
@@ -25,6 +25,7 @@ final class HomeAction
         $this->hash     = $hash;
         $this->auth     = $auth;
         $this->flash    = new \Slim\Flash\Messages();
+        $this->session  = new \App\Helper\Session;
        
     }
 
@@ -42,7 +43,8 @@ final class HomeAction
     public function dashboard(Request $request, Response $response, $args)
     {
         if(isset($_SESSION['user_id'])){
-
+            print_r($_SESSION['user_id']);
+            print_r($this->session->get('user_id'));
         }else{
             return $response->withRedirect('login');
         }
@@ -70,10 +72,10 @@ final class HomeAction
         'password'      => [$password, 'required']
         ]);;
 
-        if($v->passes()){
+        if($v->passes()){            
             $user = User::where('username', $identifier)->orWhere('email', $identifier)->first();
-            if($user && $this->hash->passwordCheck($password, $user->password)){
-                $_SESSION[$this->auth['session']] = $user->id;
+            if($user && $this->hash->passwordCheck($password, $user->password)){                
+                $this->session->set($this->auth['session'],$user->id);
                 return $response->withRedirect('dashboard');
             }
             else{
