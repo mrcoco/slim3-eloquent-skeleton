@@ -13,7 +13,7 @@ class User extends Migration
         Capsule::schema()->create('users', function($table)
         {
             $table->increments('id');
-            $table->string('name');
+            $table->string('username');
             $table->string('email')->unique()->nullable();
             $table->string('password');
             $table->timestamps();
