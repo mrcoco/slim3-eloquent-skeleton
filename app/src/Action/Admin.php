@@ -24,9 +24,61 @@ class Admin
 
 	public function index()
 	{
-		if(! Acl::isAllow('admin','index')){
-			return $this->response->withRedirect('dashboard');
-		}
+		
+		Acl::isAllow('admin','index');
+		$this->view->render($this->response, 'admin.twig');
+	}
+
+	public function users()
+	{
+		Acl::isAllow('user','index');
+		$this->view->render($this->response, 'user.twig');
+	}
+
+	public function userEdit()
+	{
+		Acl::isAllow('user','edit');
+		$this->view->render($this->response, 'form.twig');
+	}
+
+	public function userDelete()
+	{
+		Acl::isAllow('user','delete');
+		$this->view->render($this->response, 'admin.twig');
+	}
+
+	public function groups()
+	{
+		Acl::isAllow('group','index');
+		$this->view->render($this->response, 'admin.twig');
+	}
+
+	public function groupsEdit()
+	{
+		Acl::isAllow('group','edit')
+		$this->view->render($this->response, 'admin.twig');
+	}
+	public function groupsDelete()
+	{
+		Acl::isAllow('group','delete')
+		$this->view->render($this->response, 'admin.twig');
+	}
+
+	public function permissions()
+	{
+		Acl::isAllow('permission','index')
+		$this->view->render($this->response, 'admin.twig');
+	}
+
+	public function permissionsEdit()
+	{
+		Acl::isAllow('permission','edit')
+		$this->view->render($this->response, 'admin.twig');
+	}
+
+	public function permissionsDelete()
+	{
+		Acl::isAllow('permission','delete')
 		$this->view->render($this->response, 'admin.twig');
 	}
 }

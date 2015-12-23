@@ -25,7 +25,8 @@
         "slim/csrf": "^0.5.0",
         "davedevelopment/phpmig": "^1.2",
         "zeuxisoo/slim-whoops": "^0.4.0",
-        "alexgarrett/violin": "^2.2"
+        "alexgarrett/violin": "^2.2",
+        "carlosocarvalho/simple-input": "^1.0"
     },
     "scripts": {
         "post-install-cmd": [

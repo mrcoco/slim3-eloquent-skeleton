@@ -2,6 +2,7 @@
 namespace App\Helper;
 use \App\Model\User;
 use \App\Model\UserPermission;
+use App\Helper\Url;
 /**
 * 
 */
@@ -23,7 +24,10 @@ class Acl
 	public function isAllow($page,$action)
 	{
 		$user_perm = UserPermission::where('page',$page)->where('action',$action)->where('group_id',$this->session->get('group_id'))->get();
-		return $user_perm->toArray();
+		if(empty($user_perm->toArray())){
+			$this->session->set('flash','You dont have permission ');
+			return Url::redirect($location='dashboard');
+		}
 		
 	}
 }

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4439d816429a8b2b0d251b43e8eba97a",
-    "content-hash": "beb064a2b68d72a943389f55ed64622d",
+    "hash": "b7ef3cbb8e05658a9aabf6b7e8338035",
+    "content-hash": "63bea73813964bbea4b29ba4a0d8cd36",
     "packages": [
         {
             "name": "alexgarrett/violin",
@@ -51,6 +51,53 @@
                 "validation"
             ],
             "time": "2015-04-11 22:58:34"
+        },
+        {
+            "name": "carlosocarvalho/simple-input",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/carlosocarvalho/simple-input.git",
+                "reference": "eab45f7e5d0fdc5b4a10b1c01e0938a00ae8b5ef"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/carlosocarvalho/simple-input/zipball/eab45f7e5d0fdc5b4a10b1c01e0938a00ae8b5ef",
+                "reference": "eab45f7e5d0fdc5b4a10b1c01e0938a00ae8b5ef",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Carlosocarvalho\\SimpleInput\\Input\\": "src"
+                },
+                "psr-4": {
+                    "Carlosocarvalho\\SimpleInput\\Input\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Carlos O Carvalho",
+                    "email": "contato@carlosocarvalho.com.br",
+                    "homepage": "http://carlosocarvalho.com.br"
+                }
+            ],
+            "description": "Simple input for get request inputs (post,get,put,delete)",
+            "keywords": [
+                "delete",
+                "get",
+                "input",
+                "post",
+                "put"
+            ],
+            "time": "2015-04-09 10:09:26"
         },
         {
             "name": "container-interop/container-interop",

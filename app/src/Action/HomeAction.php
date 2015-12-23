@@ -5,6 +5,7 @@ use Slim\Views\Twig;
 use Psr\Log\LoggerInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use Carlosocarvalho\SimpleInput\Input\Input;
 use App\Model\User;
 use App\Validation\Validator;
 use App\Helper\Hash;
@@ -15,7 +16,6 @@ final class HomeAction
     private $logger;
     private $hash;
     private $auth;
-    //private $flash;
     private $session;
 
     public function __construct(Twig $view, LoggerInterface $logger, $hash,$auth)
@@ -42,9 +42,8 @@ final class HomeAction
     public function dashboard(Request $request, Response $response, $args)
     {
         if(isset($_SESSION['user_id'])){
-            $acl = new Acl;
-            print_r($acl->profile());
-            //return $this->view->render($response, 'dashboard.twig');
+            $flash = $this->session->get('flash');
+            return $this->view->render($response, 'dashboard.twig',['flash' => $flash ] );
         }else{
             return $response->withRedirect('login');
         }
@@ -64,8 +63,8 @@ final class HomeAction
 
     public function loginPost(Request $request, Response $response, $args)
     {
-        $identifier = $_POST['identifier'];
-        $password   = $_POST['password'];
+        $identifier = Input::post('identifier');
+        $password   = Input::post('password');
         $v = new Validator(new User);
         $v->validate([
         'identifier'    => [$identifier, 'required|email'],
@@ -99,10 +98,10 @@ final class HomeAction
 
     public function registerPost(Request $request, Response $response, $args)
     {
-        $email      = $_POST['email'];
-        $username   = $_POST['username'];
-        $password   = $_POST['password'];
-        $passwordConfirm = $_POST['password_confirm'];
+        $email      = Input::post('email');
+        $username   = Input::post('username');
+        $password   = Input::post('password');
+        $passwordConfirm = Input::post('password_confirm');
         $v = new Validator(new User);
         $v->validate([
             'email'     => [$email, 'required|email|uniqueEmail'],
