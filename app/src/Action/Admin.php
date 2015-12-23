@@ -13,6 +13,7 @@ class Admin
     private $logger;
 	public $session;
 	public $response;
+	public $privateResources; 
 
 	public function __construct(Twig $view, LoggerInterface $logger)
 	{
@@ -55,30 +56,32 @@ class Admin
 
 	public function groupsEdit()
 	{
-		Acl::isAllow('group','edit')
+		Acl::isAllow('group','edit');
 		$this->view->render($this->response, 'admin.twig');
 	}
 	public function groupsDelete()
 	{
-		Acl::isAllow('group','delete')
+		Acl::isAllow('group','delete');
 		$this->view->render($this->response, 'admin.twig');
 	}
 
 	public function permissions()
 	{
-		Acl::isAllow('permission','index')
-		$this->view->render($this->response, 'admin.twig');
+		Acl::isAllow('permission','index');
+		$resource 	= Acl::getResource();
+		$user 		= Acl::getUser();
+		$this->view->render($this->response, 'admin.twig',['resource' => $resource , 'user' => $user ]);
 	}
 
 	public function permissionsEdit()
 	{
-		Acl::isAllow('permission','edit')
+		Acl::isAllow('permission','edit');
 		$this->view->render($this->response, 'admin.twig');
 	}
 
 	public function permissionsDelete()
 	{
-		Acl::isAllow('permission','delete')
+		Acl::isAllow('permission','delete');
 		$this->view->render($this->response, 'admin.twig');
 	}
 }

@@ -1,7 +1,7 @@
 <?php
-
 use Phpmig\Migration\Migration;
 use Illuminate\Database\Capsule\Manager as Capsule;
+use App\Model\UserPermission as Permission;
 
 class UserPermission extends Migration
 {
@@ -18,6 +18,54 @@ class UserPermission extends Migration
             $table->string('action');
             $table->timestamps();
         });
+        $array = array(
+            array(
+                'group_id'  => '1',
+                'page'      => 'user',
+                'action'    => 'index',
+            ),
+            array(
+                'group_id'  => '1',
+                'page'      => 'user',
+                'action'    => 'edit',
+            ),
+            array(
+                'group_id'  => '1',
+                'page'      => 'user',
+                'action'    => 'delete',
+            ),
+            array(
+                'group_id'  => '1',
+                'page'      => 'group',
+                'action'    => 'index',
+            ),
+            array(
+                'group_id'  => '1',
+                'page'      => 'group',
+                'action'    => 'edit',
+            ),
+            array(
+                'group_id'  => '1',
+                'page'      => 'group',
+                'action'    => 'delete',
+            ),
+            array(
+                'group_id'  => '1',
+                'page'      => 'permission',
+                'action'    => 'index',
+            ),
+            array(
+                'group_id'  => '1',
+                'page'      => 'permission',
+                'action'    => 'edit',
+            ),
+            array(
+                'group_id'  => '1',
+                'page'      => 'permission',
+                'action'    => 'delete',
+            ));
+        Permission::insert($array);
+
     }
 
     /**

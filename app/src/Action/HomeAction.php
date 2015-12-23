@@ -10,6 +10,7 @@ use App\Model\User;
 use App\Validation\Validator;
 use App\Helper\Hash;
 use App\Helper\Acl;
+
 final class HomeAction
 {
     private $view;
@@ -41,12 +42,11 @@ final class HomeAction
 
     public function dashboard(Request $request, Response $response, $args)
     {
-        if(isset($_SESSION['user_id'])){
-            $flash = $this->session->get('flash');
-            return $this->view->render($response, 'dashboard.twig',['flash' => $flash ] );
-        }else{
+        if(! Acl::isLogged()){
             return $response->withRedirect('login');
         }
+        $flash = $this->session->get('flash');
+        return $this->view->render($response, 'dashboard.twig',['flash' => $flash ] );
     }
 
     public function logout(Request $request, Response $response, $args)
@@ -101,6 +101,7 @@ final class HomeAction
         $email      = Input::post('email');
         $username   = Input::post('username');
         $password   = Input::post('password');
+
         $passwordConfirm = Input::post('password_confirm');
         $v = new Validator(new User);
         $v->validate([
@@ -115,12 +116,14 @@ final class HomeAction
             $user->email    = $email;
             $user->username = $username;
             $user->password = $this->hash->password($password);
-            $user->group_id = 1;
+            $user->group_id = 3;
             $user->save();
-            $success = "You have been registered.";
+            $flash = "You have been registered.";
+        }else{
+            $flash = "registration failed.";
         }
         
-        $this->view->render($response, 'register.twig',['errors' => $v->errors(),'success' => $success,'request' => $request]);
+        $this->view->render($response, 'register.twig',['errors' => $v->errors(),'flash' => $flash,'request' => $request]);
         return $response;
     }
 }

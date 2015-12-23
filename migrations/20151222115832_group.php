@@ -2,7 +2,7 @@
 
 use Phpmig\Migration\Migration;
 use Illuminate\Database\Capsule\Manager as Capsule;
-
+use App\Model\Group as Groups;
 class Group extends Migration
 {
     /**
@@ -17,6 +17,20 @@ class Group extends Migration
             $table->string('description');
             $table->timestamps();
         });
+        $array = array(
+            array(
+                'group_name'    => 'Admin',
+                'description'   => 'Administrator',
+            ),
+            array(
+                'group_name'    => 'Moderator',
+                'description'   => 'Moderator',
+            ),
+            array(
+                'group_name'    => 'User',
+                'description'   => 'User',
+            ));
+        Groups::insert($array);
     }
 
     /**
@@ -24,6 +38,6 @@ class Group extends Migration
      */
     public function down()
     {
-
+        Capsule::schema()->drop('groups');
     }
 }

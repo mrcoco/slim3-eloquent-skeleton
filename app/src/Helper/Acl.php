@@ -30,4 +30,56 @@ class Acl
 		}
 		
 	}
+
+	public function isLogged()
+	{
+		if(isset($_SESSION['user_id'])){
+            return true;
+        }
+        return false;
+
+	}
+
+	public function getPermission($group_id)
+	{
+		$role = UserPermission::where('group_id',$group_id)->get();
+		if($role->toArray())
+		{
+
+		}
+	}
+
+	public function getResource()
+	{
+		return $privateResources = array(
+	        'user' => array(
+	            'index',
+	            'search',
+	            'edit',
+	            'create',
+	            'delete',
+	            'changePassword'
+	        ),
+	        'group' => array(
+	            'index',
+	            'search',
+	            'edit',
+	            'create',
+	            'delete'            
+	        ),
+	        'permission' => array(
+	            'index',
+	            'search',
+	            'edit',
+	            'create',
+	            'delete'
+	        )
+	    );
+	}
+
+	public function getUser()
+	{
+		return User::all();
+	}
+
 }

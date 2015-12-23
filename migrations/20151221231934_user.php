@@ -2,7 +2,7 @@
 
 use Phpmig\Migration\Migration;
 use Illuminate\Database\Capsule\Manager as Capsule;
-
+use App\Model\User as Users;
 class User extends Migration
 {
     /**
@@ -20,6 +20,38 @@ class User extends Migration
             $table->integer('status');
             $table->timestamps();
         });
+
+        // $user = new Users();
+        // $user->username  = 'admin';
+        // $user->email     = 'admin@admin.dev';
+        // $user->password  = '$2y$10$ElXh/aFKLN1Vf4t2G0DTnupWcEpS2/2OP8fIsQXjHp7KXE3bjcUke';
+        // $user->group_id  = '1';
+        // $user->status    = '1';
+        // $user->save();
+        $array = array(
+            array(
+                'username'  => 'admin',
+                'email'     => 'admin@slim.dev',
+                'password'  => '$2y$10$ElXh/aFKLN1Vf4t2G0DTnupWcEpS2/2OP8fIsQXjHp7KXE3bjcUke',
+                'group_id'  => '1',
+                'status'    => '1'
+            ),
+            array(
+                'username'  => 'moderator',
+                'email'     => 'moderator@slim.dev',
+                'password'  => '$2y$10$ElXh/aFKLN1Vf4t2G0DTnupWcEpS2/2OP8fIsQXjHp7KXE3bjcUke',
+                'group_id'  => '1',
+                'status'    => '1'
+            ),
+            array(
+                'username'  => 'user',
+                'email'     => 'user@slim.dev',
+                'password'  => '$2y$10$ElXh/aFKLN1Vf4t2G0DTnupWcEpS2/2OP8fIsQXjHp7KXE3bjcUke',
+                'group_id'  => '1',
+                'status'    => '1'
+            )
+            );
+        Users::insert($array);
     }
 
     /**
