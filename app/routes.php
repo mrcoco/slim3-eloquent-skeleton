@@ -1,13 +1,11 @@
 <?php
 // Routes
-//use \App\Helper\Acl;
-//$acl = new Acl;
 $app->get('/','App\Action\HomeAction:dispatch')->setName('homepage');
 $app->get('/login', 'App\Action\HomeAction:login')->setName('login');
 $app->get('/logout', 'App\Action\HomeAction:logout')->setName('logout');
 $app->get('/admin','App\Action\Admin:index')->setName('admin');
 $app->get('/permission','App\Action\Admin:permissions')->setName('permission');
-//$app->get('/user','App\Action\Admin:users')->add($acl->isAllow('user','index'));
+$app->get('/user','App\Action\Admin:users')->setName('user');
 $app->get('/register', 'App\Action\HomeAction:register')->setName('register');
 $app->get('/dashboard', 'App\Action\HomeAction:dashboard')->setName('dashboard');
 $app->post('/login','App\Action\HomeAction:loginPost')->setName('login.post');

@@ -50,6 +50,10 @@ $container['hash'] = function($c) {
     return new App\Helper\Hash($c->get('app'));
 };
 
+$container['session'] = function($c){
+    return new App\Helper\Session;
+};
+
 
 // -----------------------------------------------------------------------------
 // Action factories
@@ -61,5 +65,5 @@ $container['App\Action\HomeAction'] = function ($c) use ($app) {
 };
 
 $container['App\Action\Admin'] = function ($c) {
-    return new App\Action\Admin($c->get('view'), $c->get('logger'));
+    return new App\Action\Admin($c->get('view'), $c->get('logger'),$c->get('session'));
 };

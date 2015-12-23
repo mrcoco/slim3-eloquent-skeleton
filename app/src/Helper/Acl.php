@@ -2,6 +2,7 @@
 namespace App\Helper;
 use \App\Model\User;
 use \App\Model\UserPermission;
+use \App\Model\Route;
 use App\Helper\Url;
 /**
 * 
@@ -31,6 +32,21 @@ class Acl
 		
 	}
 
+	public function cekPermission($page,$action)
+	{
+		$user_perm = UserPermission::where('page',$page)->where('action',$action)->where('group_id',$this->session->get('group_id'))->get();
+		if(empty($user_perm->toArray())){
+			return false;
+		}
+		return true;
+		
+	}
+
+	public function getRoute($routes)
+	{
+		$route = str_replace('/', '', $routes);
+		return Route::where('route',$route)->first();
+	}
 	public function isLogged()
 	{
 		if(isset($_SESSION['user_id'])){
