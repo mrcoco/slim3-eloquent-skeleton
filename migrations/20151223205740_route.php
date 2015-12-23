@@ -16,6 +16,7 @@ class Route extends Migration
             $table->string('route');
             $table->string('page');
             $table->string('action');
+            $table->string('address');
             $table->timestamps();
         });
         $array = array(
@@ -23,51 +24,61 @@ class Route extends Migration
                 'route'  => 'admin',
                 'page'      => 'user',
                 'action'    => 'index',
+                'address'   => 'App\Action\Admin:index'
             ),
             array(
                 'route'  => 'user',
                 'page'      => 'user',
                 'action'    => 'index',
+                'address'   => 'App\Action\Admin:users'
             ),
             array(
-                'route'  => '1',
+                'route'  => 'useredit',
                 'page'      => 'user',
                 'action'    => 'edit',
+                'address'   => 'App\Action\Admin:userEdit'
             ),
             array(
-                'route'  => '1',
+                'route'  => 'userdelete',
                 'page'      => 'user',
                 'action'    => 'delete',
+                'address'   => 'App\Action\Admin:userDelete'
             ),
             array(
                 'route'  => 'group',
                 'page'      => 'group',
                 'action'    => 'index',
+                'address'   => 'App\Action\Admin:groups'
             ),
             array(
-                'route'  => '1',
+                'route'  => 'groupedit',
                 'page'      => 'group',
                 'action'    => 'edit',
+                'address'   => 'App\Action\Admin:groupEdit'
             ),
             array(
-                'route'  => '1',
+                'route'  => 'groupdelete',
                 'page'      => 'group',
                 'action'    => 'delete',
+                'address'   => 'App\Action\Admin:groupDelete'
             ),
             array(
                 'route'  => 'permission',
                 'page'      => 'permission',
                 'action'    => 'index',
+                'address'   => 'App\Action\Admin:permissions'
             ),
             array(
-                'route'  => '1',
+                'route'  => 'permissionedit',
                 'page'      => 'permission',
                 'action'    => 'edit',
+                'address'   => 'App\Action\Admin:permissionEdit'
             ),
             array(
-                'route'  => '1',
+                'route'  => 'permissiondelete',
                 'page'      => 'permission',
                 'action'    => 'delete',
+                'address'   => 'App\Action\Admin:permissionDelete'
             ));
         Routes::insert($array);
     }

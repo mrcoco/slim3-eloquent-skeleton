@@ -33,37 +33,30 @@ class Admin
 
 	public function users(Request $request, Response $response, $args)
 	{
-		
-		//Acl::isAllow('user','index');
 		$this->view->render($response, 'user.twig');
 	}
 
 	public function userEdit(Request $request, Response $response, $args)
 	{
-		Acl::isAllow('user','edit');
 		$this->view->render($response, 'form.twig');
 	}
 
 	public function userDelete()
 	{
-		Acl::isAllow('user','delete');
 		$this->view->render($response, 'admin.twig');
 	}
 
 	public function groups(Request $request, Response $response, $args)
 	{
-		Acl::isAllow('group','index');
-		$this->view->render($response, 'admin.twig');
+		$this->view->render($response, 'group.twig');
 	}
 
 	public function groupsEdit(Request $request, Response $response, $args)
 	{
-		Acl::isAllow('group','edit');
 		$this->view->render($response, 'admin.twig');
 	}
 	public function groupsDelete()
 	{
-		Acl::isAllow('group','delete');
 		$this->view->render($response, 'admin.twig');
 	}
 
@@ -77,13 +70,11 @@ class Admin
 
 	public function permissionsEdit(Request $request, Response $response, $args)
 	{
-		Acl::isAllow('permission','edit');
 		$this->view->render($response, 'admin.twig');
 	}
 
 	public function permissionsDelete()
 	{
-		Acl::isAllow('permission','delete');
 		$this->view->render($response, 'admin.twig');
 	}
 }
