@@ -54,3 +54,9 @@ This is a simple skeleton project fork from akrabat/slim3-skeleton that includes
 
 * // Only specified MigrationID the migration / roll back
 * phpmig [up | down] [MigrationID]
+
+### Demo User:
+
+1. `admin` username: admin password: password 
+2. `moderator` username: moderator password: password 
+3. `user` username: user password: password 
