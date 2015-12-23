@@ -32,7 +32,7 @@ class Admin
 
 	public function users()
 	{
-		Acl::isAllow('user','index');
+		//Acl::isAllow('user','index');
 		$this->view->render($this->response, 'user.twig');
 	}
 
