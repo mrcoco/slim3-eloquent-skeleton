@@ -11,6 +11,10 @@ class <?= $className ?> extends Migration
      */
     public function up()
     {
+        Capsule::schema()->create('<?= strtolower($className) ?>', function($table)
+        {
+            $table->timestamps();
+        });
 
     }
 
@@ -19,6 +23,6 @@ class <?= $className ?> extends Migration
      */
     public function down()
     {
-
+        Capsule::schema()->drop('<?= strtolower($className) ?>');
     }
 }
