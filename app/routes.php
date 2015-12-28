@@ -12,6 +12,3 @@ $route = Route::all();
 foreach ($route as $rt) {
 	$app->get('/'.$rt->route,$rt->address)->setName($rt->route);
 }
-//$app->get('/admin','App\Action\Admin:index')->setName('admin');
-//$app->get('/permission','App\Action\Admin:permissions')->setName('permission');
-//$app->get('/user','App\Action\Admin:users')->setName('user');
