@@ -33,27 +33,29 @@ This is a simple skeleton project fork from akrabat/slim3-skeleton that includes
 * `app/templates/home.twig`: Twig template file for the home page
 
 ## Migration
-
+*  migrate all data
+* vendor/davedevelopment/phpmig/bin/phpmig migrate
+*
 * Confirmation of status
-* phpmig status
+* vendor/davedevelopment/phpmig/bin/phpmig status
 
 * Creating // migration file
-* phpmig generate [MigrationName]
+* vendor/davedevelopment/phpmig/bin/phpmig generate [MigrationName]
 
 * //Execution of migration
-* phpmig migration
+* vendor/davedevelopment/phpmig/bin/phpmig migration
 
 * // I one Back
-* phpmig rollback
+* vendor/davedevelopment/phpmig/bin/phpmig rollback
 
 * // Return all
-* phpmig rollback -t 0
+* vendor/davedevelopment/phpmig/bin/phpmig rollback -t 0
 
 * // Go back to the time of completion of the specified MigrationID
-* phpmig rollback -t [MigrationID]
+* vendor/davedevelopment/phpmig/bin/phpmig rollback -t [MigrationID]
 
 * // Only specified MigrationID the migration / roll back
-* phpmig [up | down] [MigrationID]
+* vendor/davedevelopment/phpmig/bin/phpmig [up | down] [MigrationID]
 
 ### Demo User:
 

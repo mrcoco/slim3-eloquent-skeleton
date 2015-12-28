@@ -112,6 +112,7 @@ $container['hash'] = function($c) {
     return new App\Helper\Hash($c->get('app'));
 };
 
+//session
 $container['session'] = function($c){
     return new App\Helper\Session;
 };
