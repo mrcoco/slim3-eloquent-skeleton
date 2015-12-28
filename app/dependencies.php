@@ -19,6 +19,68 @@ $container['view'] = function ($c) {
     return $view;
 };
 
+$container['jsonRender'] = function($c){
+    $view = new App\Helper\JsonRenderer();
+
+  return $view;
+};
+
+$container['jsonRequest'] = function ($c) {
+  $jsonRequest = new App\Helper\JsonRequest();
+
+  return $jsonRequest;
+};
+
+$container['notAllowedHandler'] = function ($c) {
+  return function ($request, $response, $methods) use ($c) {
+
+    $view = new App\Helper\JsonRenderer();
+    return $view->render($response, 405,
+        ['error_code' => 'not_allowed', 'error_message' => 'Method must be one of: ' . implode(', ', $methods)]
+    );
+
+  };
+};
+
+$container['notFoundHandler'] = function ($c) {
+  return function ($request, $response) use ($c) {
+    $view = new App\Helper\JsonRenderer();
+
+    return $view->render($response, 404, ['error_code' => 'not_found', 'error_message' => 'Not Found']);
+  };
+};
+
+$container['errorHandler'] = function ($c) {
+  return function ($request, $response, $exception) use ($c) {
+
+    $settings = $c->settings;
+    $view = new App\Helper\JsonRenderer();
+
+    $errorCode = 500;
+    if (is_numeric($exception->getCode()) && $exception->getCode() > 300  && $exception->getCode() < 600) {
+      $errorCode = $exception->getCode();
+    }
+
+    if ($settings['displayErrorDetails'] == true) {
+      $data = [
+          'error_code' => $errorCode,
+          'error_message' => $exception->getMessage(),
+          'file' => $exception->getFile(),
+          'line' => $exception->getLine(),
+          'trace' => explode("\n", $exception->getTraceAsString()),
+      ];
+    } else {
+      $data = [
+          'error_code' => $errorCode,
+          'error_message' => $exception->getMessage()
+      ];
+    }
+
+    return $view->render($response, $errorCode, $data);
+  };
+};
+
+
 // Flash messages
 $container['flash'] = function ($c) {
     return new \Slim\Flash\Messages;
@@ -61,7 +123,7 @@ $container['session'] = function($c){
 
 $container['App\Action\HomeAction'] = function ($c) use ($app) {
     //$settings = $c->get('settings');
-    return new App\Action\HomeAction($c->get('view'), $c->get('logger'),$c->get('hash'),$c->get('auth'));
+    return new App\Action\HomeAction($c->get('jsonRequest'),$c->get('view'), $c->get('logger'),$c->get('hash'),$c->get('auth'));
 };
 
 $container['App\Action\Admin'] = function ($c) {

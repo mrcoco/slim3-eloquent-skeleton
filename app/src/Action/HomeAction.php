@@ -10,6 +10,8 @@ use App\Model\User;
 use App\Validation\Validator;
 use App\Helper\Hash;
 use App\Helper\Acl;
+use App\Helper\JsonRequest;
+use App\Helper\JsonRenderer;
 
 final class HomeAction
 {
@@ -18,14 +20,17 @@ final class HomeAction
     private $hash;
     private $auth;
     private $session;
+    private $jsonRequest;
 
-    public function __construct(Twig $view, LoggerInterface $logger, $hash,$auth)
+    public function __construct(JsonRequest $jsonRequest,Twig $view, LoggerInterface $logger, $hash,$auth)
     {
         $this->view     = $view;
         $this->logger   = $logger;
         $this->hash     = $hash;
         $this->auth     = $auth;
         $this->session  = new \App\Helper\Session;
+        $this->jsonRequest  = new JsonRequest();
+        $this->JsonRender   = new JsonRenderer();
        
     }
 
@@ -59,6 +64,20 @@ final class HomeAction
     public function login(Request $request, Response $response, $args){
         $this->view->render($response, 'login.twig');
         return $response;
+    }
+
+    public function testJson(Request $request, Response $response, $args)
+    {
+        $jsonRequest = $this->jsonRequest->setRequest($request);
+
+        $user_id = $jsonRequest->getRequestParam('password');
+
+           $data = [
+                'user_id' => $user_id
+            ];
+
+            $response = $this->JsonRender->render($response, 200, $data);
+            return $response;
     }
 
     public function loginPost(Request $request, Response $response, $args)

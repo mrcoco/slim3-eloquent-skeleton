@@ -33,7 +33,7 @@ class Admin
 
 	public function users(Request $request, Response $response, $args)
 	{
-		$this->view->render($response, 'user.twig');
+		$this->view->render($response, 'user.twig');		
 	}
 
 	public function userEdit(Request $request, Response $response, $args)

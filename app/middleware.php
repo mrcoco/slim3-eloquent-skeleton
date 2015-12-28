@@ -22,13 +22,16 @@ $app->add(function($request, $response, $next){
 			break;
 		default:
 			$routes = $acl->getRoute($request->getUri()->getPath());
-			if(! $routes->count() == 0){
-				if(! $acl->cekPermission($routes->page,$routes->action)){
-					return $this->view->render($response, 'dashboard.twig',['flash' => 'You dont have permission to access '.$request->getUri()->getPath() ] );
-				} 
-			}else{
-				return $this->view->render($response, 'dashboard.twig',['flash' => 'You dont have permission to access, '.$request->getUri()->getPath().' page not found' ] );
+			if($routes){
+				if(! $routes->count() == 0){
+					if(! $acl->cekPermission($routes->page,$routes->action)){
+						return $this->view->render($response, 'dashboard.twig',['flash' => 'You dont have permission to access '.$request->getUri()->getPath() ] );
+					} 
+				}else{
+					return $this->view->render($response, 'dashboard.twig',['flash' => 'You dont have permission to access, '.$request->getUri()->getPath().' page not found' ] );
+				}
 			}
+			
 			break;
 	}
 	

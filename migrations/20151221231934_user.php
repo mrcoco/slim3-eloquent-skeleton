@@ -21,13 +21,6 @@ class User extends Migration
             $table->timestamps();
         });
 
-        // $user = new Users();
-        // $user->username  = 'admin';
-        // $user->email     = 'admin@admin.dev';
-        // $user->password  = '$2y$10$ElXh/aFKLN1Vf4t2G0DTnupWcEpS2/2OP8fIsQXjHp7KXE3bjcUke';
-        // $user->group_id  = '1';
-        // $user->status    = '1';
-        // $user->save();
         $array = array(
             array(
                 'username'  => 'admin',
