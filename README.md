@@ -61,6 +61,6 @@ This is a simple skeleton project fork from akrabat/slim3-skeleton that includes
 
 ### Demo User:
 
-1. `admin` username: `admin` password: `password` 
-2. `moderator` username: `moderator` password: `password` 
-3. `user` username: `user` password: `password` 
+1. `admin` username: `admin@slim.dev` password: `password` 
+2. `moderator` username: `moderator@slim.dev` password: `password` 
+3. `user` username: `user@slim.dev` password: `password` 
