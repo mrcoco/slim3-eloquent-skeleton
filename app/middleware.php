@@ -2,23 +2,24 @@
 use Zeuxisoo\Whoops\Provider\Slim\WhoopsMiddleware;
 use \App\Helper\Acl;
 
-$app->add(new WhoopsMiddleware);
+//$app->add(new WhoopsMiddleware);
+$app->add($app->getContainer()->get('csrf'));
 $app->add(function($request, $response, $next){
 	$acl = new Acl; 
 	switch ($request->getUri()->getPath()) {
 		case '/':
 			break;
 		case '/login':
-			$response->write(' Please Insert Username and password ');
+			//$response->write(' Please Insert Username and password ');
 			break;
 		case '/register':
-			$response->write(' Please Insert all field ');
+			//$response->write(' Please Insert all field ');
 			break;
 		case '/logout':
-			$response->write(' logout ');
+			//$response->write(' logout ');
 			break;
 		case '/dashboard':
-			$response->write(' dashboard ');
+			//$response->write(' dashboard ');
 			break;
 		default:
 			$routes = $acl->getRoute($request->getUri()->getPath());

@@ -62,7 +62,10 @@ final class HomeAction
     }
 
     public function login(Request $request, Response $response, $args){
-        $this->view->render($response, 'login.twig');
+        $this->view->render($response, 'login.twig',['csrf' => [
+                        'name' => $request->getAttribute('csrf_name'),
+                        'value' => $request->getAttribute('csrf_value'),
+                      ],]);
         return $response;
     }
 
@@ -89,21 +92,32 @@ final class HomeAction
         'identifier'    => [$identifier, 'required|email'],
         'password'      => [$password, 'required']
         ]);;
+        if ($request->getAttribute('csrf_status') === false) {
+            $flash = 'CSRF faiure';
+            $this->view->render($response, 'login.twig',['errors' => $v->errors(),'flash' => $flash,'request' => $request]);
+        }else{
+            if($v->passes()){            
+                $user = User::where('username', $identifier)->orWhere('email', $identifier)->first();
+                if($user && $this->hash->passwordCheck($password, $user->password)){                
+                    $this->session->set($this->auth['session'],$user->id);
+                    $this->session->set($this->auth['group'],$user->group_id);
+                    return $response->withRedirect('dashboard');
+                }
+                else{
+                    $flash = 'Sorry, you couldn\'t be logged in.';            
+                    $this->view->render($response, 'login.twig',['errors' => $v->errors(),'flash' => $flash,'request' => $request]);
+                }
 
-        if($v->passes()){            
-            $user = User::where('username', $identifier)->orWhere('email', $identifier)->first();
-            if($user && $this->hash->passwordCheck($password, $user->password)){                
-                $this->session->set($this->auth['session'],$user->id);
-                $this->session->set($this->auth['group'],$user->group_id);
-                return $response->withRedirect('dashboard');
+            }else{        
+                $this->view->render($response, 'login.twig',
+                    ['errors' => $v->errors(),
+                    'request' => $request,
+                    'csrf' => [
+                        'name' => $request->getAttribute('csrf_name'),
+                        'value' => $request->getAttribute('csrf_value'),
+                      ],
+                    ]);
             }
-            else{
-                $flash = 'Sorry, you couldn\'t be logged in.';            
-                $this->view->render($response, 'login.twig',['errors' => $v->errors(),'flash' => $flash,'request' => $request]);
-            }
-
-        }else{        
-            $this->view->render($response, 'login.twig',['errors' => $v->errors(),'request' => $request]);
         }
         
         return $response;
