@@ -47,9 +47,6 @@ final class HomeAction
 
     public function dashboard(Request $request, Response $response, $args)
     {
-        if(! Acl::isLogged()){
-            return $response->withRedirect('login');
-        }
         $flash = $this->session->get('flash');
         return $this->view->render($response, 'dashboard.twig',['flash' => $flash ] );
     }
@@ -62,10 +59,12 @@ final class HomeAction
     }
 
     public function login(Request $request, Response $response, $args){
-        $this->view->render($response, 'login.twig',['csrf' => [
+        $this->view->render($response, 'login.twig',
+            ['csrf' => [
                         'name' => $request->getAttribute('csrf_name'),
                         'value' => $request->getAttribute('csrf_value'),
-                      ],]);
+                      ],
+            ]);
         return $response;
     }
 
