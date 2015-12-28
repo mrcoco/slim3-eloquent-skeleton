@@ -9,8 +9,8 @@ This is a simple skeleton project fork from akrabat/slim3-skeleton that includes
 ### Run it:
 
 1. `$ cd my-app`
-2. `$ vendor/davedevelopment/phpmig/bin/phpmig migrate`
-3. Change database setting `app\setting.php`
+2. Change database setting `app\setting.php`
+3. `$ vendor/davedevelopment/phpmig/bin/phpmig migrate`
 4. `$ php -S 0.0.0.0:8888 -t public public/index.php`
 5. Browse to http://localhost:8888
 
