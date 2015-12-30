@@ -1,6 +1,6 @@
 # Slim 3 Skeleton
 
-This is a simple skeleton project fork from akrabat/slim3-skeleton that includes Twig, Flash messages, eloquent ORM and Monolog.
+This is a simple skeleton project fork from akrabat/slim3-skeleton that includes scaffold tool, migrations,auth,Twig, Flash messages, eloquent ORM and Monolog.
 
 ## Create your project:
 
