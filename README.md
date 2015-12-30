@@ -33,6 +33,7 @@ This is a simple skeleton project fork from akrabat/slim3-skeleton that includes
 * `app/routes.php`: All application routes are here
 * `app/src/Action/HomeAction.php`: Action class for the home page
 * `app/templates/home.twig`: Twig template file for the home page
+
 ## CLI Tools
 * Currently there are 3 supported commands:
 * `php cli.php create:action MyActionClassName`
