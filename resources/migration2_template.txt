@@ -1,0 +1,29 @@
+<?php
+
+use Phpmig\Migration\Migration;
+use Illuminate\Database\Capsule\Manager as Capsule;
+use App\Model\!name as !name;
+
+class !name extends Migration
+{
+    /**
+     * Do the migration
+     */
+    public function up()
+    {
+        Capsule::schema()->create('?name', function($table)
+        {
+            $table->increments('id');
+            !table
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Undo the migration
+     */
+    public function down()
+    {
+        Capsule::schema()->drop('?name');
+    }
+}
