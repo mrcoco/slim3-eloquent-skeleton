@@ -39,31 +39,33 @@ This is a simple skeleton project fork from akrabat/slim3-skeleton that includes
 * `php cli.php create:action MyActionClassName`
 * `php cli.php create:middleware MyMiddlewareClassName`
 * `php cli.php create:model MyModelClassName`
+* `php cli.php create:scaffold MyModuleName`
+
 
 ## Migration
 *  migrate all data
-* vendor/davedevelopment/phpmig/bin/phpmig migrate
+* php cli.php migrate
 *
 * Confirmation of status
 * vendor/davedevelopment/phpmig/bin/phpmig status
 
 * Creating // migration file
-* vendor/davedevelopment/phpmig/bin/phpmig generate [MigrationName]
+* php cli.php generate [MigrationName]
 
 * //Execution of migration
-* vendor/davedevelopment/phpmig/bin/phpmig migration
+* php cli.php migration
 
 * // I one Back
-* vendor/davedevelopment/phpmig/bin/phpmig rollback
+* php cli.php rollback
 
 * // Return all
-* vendor/davedevelopment/phpmig/bin/phpmig rollback -t 0
+* php cli.php rollback -t 0
 
 * // Go back to the time of completion of the specified MigrationID
-* vendor/davedevelopment/phpmig/bin/phpmig rollback -t [MigrationID]
+* php cli.php rollback -t [MigrationID]
 
 * // Only specified MigrationID the migration / roll back
-* vendor/davedevelopment/phpmig/bin/phpmig [up | down] [MigrationID]
+* php cli.php [up | down] [MigrationID]
 
 ### Demo User:
 
