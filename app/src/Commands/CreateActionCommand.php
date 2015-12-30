@@ -26,13 +26,34 @@ class CreateActionCommand  extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $name = $input->getArgument('name');
+        
+        $directory = "app/src/Action/";
 
         $file = file_get_contents("resources/action_template.txt");
 
         $file = str_replace("!name", $name, $file);
 
-        if (!file_exists("app/src/Action/".$name."Action.php")) {
-            $fh = fopen("app/src/Action/" . $name . "Action.php", "w");
+        if (is_dir($directory) && !is_writable($directory)) {
+            $output->writeln('The "%s" directory is not writable');
+            return;
+        }
+
+        if (!is_dir($directory)) {
+            $dialog = $this->getHelperSet()->get('dialog');
+
+            if (!$dialog->askConfirmation($output, '<question>Directory doesn\'t exist. Would you like to try to create it?</question>')) {
+                return;
+            }
+
+            @mkdir($directory);
+            if (!is_dir($directory)) {
+                $output->writeln('<error>Couldn\'t create directory.</error>');
+                return;
+            }
+        }
+
+        if (!file_exists($directory.$name."Action.php")) {
+            $fh = fopen($directory . $name . "Action.php", "w");
             fwrite($fh, $file);
             fclose($fh);
 

@@ -28,13 +28,33 @@ class CreateMiddlewareCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $name = $input->getArgument('name');
+        
+        $directory = "app/src/Middleware/";
 
         $file = file_get_contents("resources/middleware_template.txt");
 
         $file = str_replace("!name", $name, $file);
 
-        if (!file_exists("app/src/Middleware/".$name."Middleware.php")) {
-            $fh = fopen("app/src/Middleware/" . $name . "Middleware.php", "w");
+        if (is_dir($directory) && !is_writable($directory)) {
+            $output->writeln('The "%s" directory is not writable');
+            return;
+        }
+        if (!is_dir($directory)) {
+            $dialog = $this->getHelperSet()->get('dialog');
+
+            if (!$dialog->askConfirmation($output, '<question>Directory doesn\'t exist. Would you like to try to create it?</question>')) {
+                return;
+            }
+
+            @mkdir($directory);
+            if (!is_dir($directory)) {
+                $output->writeln('<error>Couldn\'t create directory.</error>');
+                return;
+            }
+        }
+
+        if (!file_exists($directory.$name."Middleware.php")) {
+            $fh = fopen($directory . $name . "Middleware.php", "w");
             fwrite($fh, $file);
             fclose($fh);
 
