@@ -1,9 +1,9 @@
 {
     "name": "mrcoco/slim3-eloquent-skeleton",
-    "description": "Simple Slim Framework 3 skeleton with Twig,eloquent & Monolog.",
+    "description": "Simple Slim Framework 3 skeleton with scaffold tool, Twig,eloquent & Monolog.",
     "license": "BSD-3-Clause",
     "type": "project",
-    "keywords": ["slim-framework", "skeleton","eloquent"],
+    "keywords": ["slim-framework", "skeleton","auth","eloquent","console","cli-tool","migration","scaffold"],
     "authors": [
         {
             "name": "Dwi Agus",
@@ -26,7 +26,8 @@
         "davedevelopment/phpmig": "^1.2",
         "zeuxisoo/slim-whoops": "^0.4.0",
         "alexgarrett/violin": "^2.2",
-        "carlosocarvalho/simple-input": "^1.0"
+        "carlosocarvalho/simple-input": "^1.0",
+        "symfony/process": "^3.0"
     },
     "scripts": {
         "post-install-cmd": [
