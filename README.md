@@ -45,9 +45,9 @@ This is a simple skeleton project fork from akrabat/slim3-skeleton that includes
 ## Migration
 *  migrate all data
 * php cli.php migrate
-*
+
 * Confirmation of status
-* vendor/davedevelopment/phpmig/bin/phpmig status
+* php cli.php status
 
 * Creating // migration file
 * php cli.php generate [MigrationName]
