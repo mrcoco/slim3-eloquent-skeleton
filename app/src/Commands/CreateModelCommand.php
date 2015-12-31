@@ -31,7 +31,7 @@ class CreateModelCommand extends Command
         $directory = "app/src/Model/";
         $file = file_get_contents("resources/model_template.txt");
 
-        $file = str_replace("!name", $name, $file);
+        $file = str_replace("!name", ucfirst($name), $file);
         $file = str_replace("?name", strtolower($name), $file);
 
         if (is_dir($directory) && !is_writable($directory)) {
@@ -52,16 +52,16 @@ class CreateModelCommand extends Command
             }
         }
 
-        if (!file_exists($directory.$name.".php")) {
-            $fh = fopen($directory . $name . ".php", "w");
+        if (!file_exists($directory.ucfirst($name).".php")) {
+            $fh = fopen($directory . ucfirst($name) . ".php", "w");
             fwrite($fh, $file);
             fclose($fh);
 
-            $className = $name . ".php";
+            $className = ucfirst($name) . ".php";
 
             $output->writeln("Created $className in App\\Model");
         } else {
-            $output->writeln("Class already Exists!");
+            $output->writeln("Class model already Exists!");
         }
     }
 

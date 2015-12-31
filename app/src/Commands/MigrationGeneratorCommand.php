@@ -15,7 +15,7 @@ class MigrationGeneratorCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('generate:migration')
+            ->setName('create:migration')
             ->setDescription('Generate Model Class')
             ->addArgument(
                 'name',
@@ -34,17 +34,12 @@ class MigrationGeneratorCommand extends Command
     {
         $names   = $input->getArgument('name');
         $column = $input->getArgument('column');
-        $dialog = $this->getHelperSet()->get('dialog');
-        //$output->writeln('The "%s" directory is not writable');
-        //    if (!$dialog->askConfirmation($output, '<question>check your Type data first (bigIncremens|bigInteger|binary|boolean|char|date|dateTime|decimal|double|enum|float|increment|integer|smallInteger|string|text ) </question>')) {
-        //        return;
-        //    }
 
         $map ="";
         $directory = 'migrations/';
         $file = file_get_contents("resources/migration2_template.txt");
 
-        $file = str_replace("!name", $names, $file);
+        $file = str_replace("!name", ucfirst($names), $file);
         $file = str_replace("?name", strtolower($names), $file);
         foreach ($column as $c) {
             $entity = explode(":", $c);
@@ -54,16 +49,16 @@ class MigrationGeneratorCommand extends Command
             $map    .= '$table->'.$type.'("'.$name.'");'."\n";
         }
         $file = str_replace("!table", $map, $file);
-        if (!file_exists($directory.date('YmdHis')."_".$names.".php")) {
-            $fh = fopen($directory .date('YmdHis')."_". $names . ".php", "w");
+        if (!file_exists($directory.date('YmdHis')."_".ucfirst($names).".php")) {
+            $fh = fopen($directory .date('YmdHis')."_". ucfirst($names) . ".php", "w");
             fwrite($fh, $file);
             fclose($fh);
 
-            $className = $names . ".php";
+            $className = ucfirst($names) . ".php";
 
             $output->writeln("Created $className in migrations");
         } else {
-            $output->writeln("Class already Exists!");
+            $output->writeln("Class migration already Exists!");
         }
         
     }

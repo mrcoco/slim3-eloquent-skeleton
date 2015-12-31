@@ -7,7 +7,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-
+use Symfony\Component\Console\Input\ArrayInput;
 
 
 class CreateScaffoldCommand extends Command
@@ -22,60 +22,51 @@ class CreateScaffoldCommand extends Command
                 InputArgument::REQUIRED,
                 'Name of the Class to Create'
             )
+            ->addArgument(
+                'column',
+                InputArgument::IS_ARRAY,
+                'column name (column:type)'
+            )
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $name   = $input->getArgument('name');
-        $model  = "app/src/Model/";
-        $action = "app/src/Action/";
-        $migration      = "migrations/";
-        $file_model     = file_get_contents("resources/model_template.txt");
-        $file_action    = file_get_contents("resources/action_template.txt");
-        $file_migration = file_get_contents("resources/migration_template.txt");
-        $file_model     = str_replace("!name", $name, $file_model);
-        $file_model     = str_replace("?name", strtolower($name), $file_model);
-        $file_migration = str_replace("!name", $name, $file_migration);
-        $file_migration = str_replace("?name", strtolower($name), $file_migration);
-        $file_action    = str_replace("!name", $name, $file_action);
+        // Generate Migration
+        //====================================================
+        $migration = $this->getApplication()->find('create:migration');
+        $migration_arguments = array(
+                'command' => 'create:migration',
+                'name'      => $input->getArgument('name'),
+                'column'    => $input->getArgument('column')
+        );
 
-        if (!file_exists($model.$name.".php")) {
-            $fh = fopen($model . $name . ".php", "w");
-            fwrite($fh, $file_model);
-            fclose($fh);
+        $input_migration = new ArrayInput($migration_arguments);
+        $returnmigration = $migration->run($input_migration, $output);
+        $output->writeln($returnmigration);
 
-            $classModel = $name . ".php";
+        // Generate Action
+        //====================================================
+        $action = $this->getApplication()->find('create:action');
+        $arguments = array(
+                'command' => 'create:action',
+                'name'      => $input->getArgument('name'),
+        );
 
-            $output->writeln("Created $classModel in App\\Model");
-            if (!file_exists($action.$name."Action.php")) {
-                $fha = fopen($action . $name . "Action.php", "w");
-                fwrite($fha, $file_action);
-                fclose($fha);
+        $input = new ArrayInput($arguments);
+        $returnCode = $action->run($input, $output);
+        $output->writeln($returnCode);
 
-                $classAction = $name . "Action.php";
-
-                $output->writeln("Created $classAction in App\\Actions");
-                if (!file_exists($migration.date('YmdHis')."_".$name.".php")) {
-                    $fhm = fopen($migration.date('YmdHis') . "_". $name . ".php", "w");
-                    if(fwrite($fhm, $file_migration)){
-                        $classMig = date('YmdHis') ."_".$name . ".php";
-
-                        $output->writeln("Created $classMig in migrations");
-                    }else{
-                        $output->writeln("Created $classMig failed");
-                    }
-                    fclose($fhm);
-                } else {
-                    $output->writeln("Class Migration already Exists!");
-                }
-            } else {
-                $output->writeln("Class Action already Exists!");
-            }
-        } else {
-            $output->writeln("Class Model already Exists!");
-        }
-        
+        // Generate Model
+        //=====================================================
+        $model = $this->getApplication()->find('create:model');
+        $model_arguments = array(
+                'command' => 'create:model',
+                'name'      => $input->getArgument('name'),
+        );
+        $input_model = new ArrayInput($model_arguments);
+        $returnmodel = $model->run($input_model, $output);
+        $output->writeln($returnmodel);        
     }
 
 }

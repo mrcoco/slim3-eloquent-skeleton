@@ -31,7 +31,7 @@ class CreateActionCommand  extends Command
 
         $file = file_get_contents("resources/action_template.txt");
 
-        $file = str_replace("!name", $name, $file);
+        $file = str_replace("!name", ucfirst($name), $file);
 
         if (is_dir($directory) && !is_writable($directory)) {
             $output->writeln('The "%s" directory is not writable');
@@ -52,16 +52,16 @@ class CreateActionCommand  extends Command
             }
         }
 
-        if (!file_exists($directory.$name."Action.php")) {
-            $fh = fopen($directory . $name . "Action.php", "w");
+        if (!file_exists($directory.ucfirst($name)."Action.php")) {
+            $fh = fopen($directory . ucfirst($name) . "Action.php", "w");
             fwrite($fh, $file);
             fclose($fh);
 
-            $className = $name . "Action.php";
+            $className = ucfirst($name) . "Action.php";
 
             $output->writeln("Created $className in App\\Actions");
         } else {
-            $output->writeln("Class already Exists!");
+            $output->writeln("Class Action already Exists!");
         }
     }
 }
