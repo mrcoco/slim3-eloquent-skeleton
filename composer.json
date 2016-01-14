@@ -32,6 +32,6 @@
     "scripts": {
         "post-update-cmd": [
             "php cli.php migrate"
-        ],
+        ]
     }
 }
