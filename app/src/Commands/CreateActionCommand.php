@@ -7,6 +7,8 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
+
 
 class CreateActionCommand  extends Command
 {
@@ -39,9 +41,11 @@ class CreateActionCommand  extends Command
         }
 
         if (!is_dir($directory)) {
-            $dialog = $this->getHelperSet()->get('dialog');
+            $dialog = $this->getHelper('dialog');
 
-            if (!$dialog->askConfirmation($output, '<question>Directory doesn\'t exist. Would you like to try to create it?</question>')) {
+            $question = new ConfirmationQuestion('<question>Directory doesn\'t exist. Would you like to try to create it?</question>', false);
+
+            if (!$dialog->ask($input, $output, $question)) {
                 return;
             }
 

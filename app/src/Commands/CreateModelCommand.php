@@ -39,11 +39,14 @@ class CreateModelCommand extends Command
             return;
         }
         if (!is_dir($directory)) {
-            $dialog = $this->getHelperSet()->get('dialog');
+            $dialog = $this->getHelper('dialog');
 
-            if (!$dialog->askConfirmation($output, '<question>Directory doesn\'t exist. Would you like to try to create it?</question>')) {
+            $question = new ConfirmationQuestion('<question>Directory doesn\'t exist. Would you like to try to create it?</question>', false);
+
+            if (!$dialog->ask($input, $output, $question)) {
                 return;
             }
+
 
             @mkdir($directory);
             if (!is_dir($directory)) {
