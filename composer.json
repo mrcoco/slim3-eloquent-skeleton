@@ -27,7 +27,7 @@
         "zeuxisoo/slim-whoops": "^0.4.0",
         "alexgarrett/violin": "^2.2",
         "carlosocarvalho/simple-input": "^1.0",
-        "symfony/process": "^3.0"
+        "symfony/process": "^5.4"
     },
     "scripts": {
         "post-update-cmd": [
